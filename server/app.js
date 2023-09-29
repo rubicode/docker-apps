@@ -8,7 +8,7 @@ const cors = require('cors');
 main().catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/breadsdb');
+  await mongoose.connect('mongodb://mongo:27017/breadsdb');
 }
 
 var indexRouter = require('./routes/index');
