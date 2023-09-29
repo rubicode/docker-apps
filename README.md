@@ -26,7 +26,9 @@ docker build -t server-odm .
 ```
 ### build container
 ```
-docker run -p 3001:3001 server-odm
+docker run -p 3001:3001 server-odm  ## automatically terminal will be showing up
+OR
+docker run --name server-odm-container -p 3001:3001 -d server-odm
 ```
 ### create volume (optional)
 ```
@@ -83,3 +85,7 @@ docker login
 docker push rubicode/docker-apps:client
 docker push rubicode/docker-apps:server
 ```
+
+### pull from dockerhub
+docker pull rubicode/docker-apps:client
+docker pull rubicode/docker-apps:server
