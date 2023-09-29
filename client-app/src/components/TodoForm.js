@@ -16,8 +16,13 @@ export default function TodoForm({ add }) {
 
     return (
         <form onSubmit={submit}>
-            <input type="text" placeholder="title" value={title} onChange={(e) => setTitle(e.target.value)} />
-            <button type="submit">add</button>
+            <div className="row mb-3">
+                <label htmlFor="title" className="col-sm-2 col-form-label">Title</label>
+                <div className="col-sm-10">
+                    <input id="title" type="text" className="form-control" placeholder="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                </div>
+            </div>
+            <button className="btn btn-primary" type="submit">add</button>
         </form>
     )
 }

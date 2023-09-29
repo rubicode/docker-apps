@@ -7,31 +7,31 @@ const todos = (state = [], action) => {
             })
 
         case 'ADD_TODO':
-            return [...state, { id: action.id, title: action.title, sent: true }]
+            return [...state, { _id: action._id, title: action.title, sent: true }]
 
         case 'ADD_TODO_SUCCESS':
             return state.map(item => {
-                if (item.id === action.id) {
-                    item.id = action.todo.id
+                if (item._id === action._id) {
+                    item._id = action.todo._id
                 }
                 return item
             })
 
         case 'ADD_TODO_FAILED':
             return state.map(item => {
-                if (item.id === action.id) {
+                if (item._id === action._id) {
                     item.sent = false
                 }
                 return item
             })
 
         case 'REMOVE_TODO_SUCCESS':
-            return state.filter(item => item.id !== action.id)
+            return state.filter(item => item._id !== action._id)
 
         case 'RESEND_TODO_SUCCESS':
             return state.map(item => {
-                if (item.id === action.id) {
-                    item.id = action.todo.id
+                if (item._id === action._id) {
+                    item._id = action.todo._id
                     item.sent = true
                 }
                 return item

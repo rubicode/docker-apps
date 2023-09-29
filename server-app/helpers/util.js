@@ -15,7 +15,6 @@ module.exports = {
             req.user = jwt.verify(token.slice(7), config.secretKey);
             next()
         } catch (err) {
-            console.log(err)
             res.status(401).json(new Response({ message: 'access denied' }, false))
         }
     },

@@ -31,36 +31,36 @@ router.get('/', tokenValid, async function (req, res, next) {
       pages
     })
   } catch (err) {
-    res.status(500).json({ err })
+    res.status(500).json(new Response({ message: err.message }, false))
   }
 });
 
-router.post('/', async function (req, res, next) {
+router.post('/', tokenValid, async function (req, res, next) {
   try {
     const { email, password } = req.body
     const user = await User.create({ email, password })
     res.json(user)
   } catch (err) {
-    res.status(500).json({ err })
+    res.status(500).json(new Response({ message: err.message }, false))
   }
 });
 
-router.put('/:id', async function (req, res, next) {
+router.put('/:id', tokenValid, async function (req, res, next) {
   try {
     const { name, phone } = req.body
     const user = await User.findByIdAndUpdate(req.params.id, { name, phone }, { new: true })
     res.json(user)
   } catch (err) {
-    res.status(500).json({ err })
+    res.status(500).json(new Response({ message: err.message }, false))
   }
 });
 
-router.delete('/:id', async function (req, res, next) {
+router.delete('/:id', tokenValid, async function (req, res, next) {
   try {
     const user = await User.findByIdAndRemove(req.params.id)
     res.json(user)
   } catch (err) {
-    res.status(500).json({ err })
+    res.status(500).json(new Response({ message: err.message }, false))
   }
 });
 

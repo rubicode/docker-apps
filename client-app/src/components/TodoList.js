@@ -10,13 +10,25 @@ export default function TodoList() {
 
     useEffect(() => {
         dispatch(loadTodo())
+        return () => {
+            dispatch(loadTodo())
+        }
     }, [dispatch])
 
-    const todosNode = todos.map(item => (<TodoItem todo={item} key={item.id} />))
+    const todosNode = todos.map(todo => (<TodoItem key={todo._id} todo={todo} />))
 
     return (
-        <ul>
-            {todosNode}
-        </ul>
+        <table className="table table-striped">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Title</th>
+                    <th>Complete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {todosNode}
+            </tbody>
+        </table>
     )
 }

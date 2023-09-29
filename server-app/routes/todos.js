@@ -46,7 +46,7 @@ router.post('/', tokenValid, async function (req, res, next) {
         res.status(201).json(todo)
     } catch (err) {
         console.log(err)
-        res.status(500).json({ err })
+        res.status(500).json(new Response({ message: err.message }, false))
     }
 });
 
@@ -56,7 +56,7 @@ router.put('/:id', async function (req, res, next) {
         const todo = await Todo.findByIdAndUpdate(req.params.id, { title, complete }, { new: true })
         res.json(todo)
     } catch (err) {
-        res.status(500).json({ err })
+        res.status(500).json(new Response({ message: err.message }, false))
     }
 });
 
@@ -65,7 +65,7 @@ router.delete('/:id', async function (req, res, next) {
         const todo = await Todo.findByIdAndRemove(req.params.id)
         res.json(todo)
     } catch (err) {
-        res.status(500).json({ err })
+        res.status(500).json(new Response({ message: err.message }, false))
     }
 });
 

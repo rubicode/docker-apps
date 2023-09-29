@@ -1,17 +1,9 @@
-import axios from "axios"
-
-const user = JSON.parse(localStorage.getItem('user'))
-
-const request = axios.create({
-    baseURL: 'http://localhost:3000/',
-    timeout: 1000,
-    headers: { 'Authorization': `Bearer ${user.token}` }
-})
+import request from "../request";
 
 export const loadTodo = () => dispatch => request.get('todos').then(({ data }) => {
     dispatch({
         type: 'LOAD_TODO_SUCCESS',
-        todos: data
+        todos: data.data.todos
     })
 }).catch((err) => {
     dispatch({
@@ -19,41 +11,41 @@ export const loadTodo = () => dispatch => request.get('todos').then(({ data }) =
     })
 })
 
-const addTodoFailed = (id) => ({
+const addTodoFailed = (_id) => ({
     type: 'ADD_TODO_FAILED',
-    id
+    _id
 })
 
-const addTodoSuccess = (id, todo) => ({
+const addTodoSuccess = (_id, todo) => ({
     type: 'ADD_TODO_SUCCESS',
-    id,
+    _id,
     todo
 })
 
-export const addTodoDraw = (id, title) => ({
+export const addTodoDraw = (_id, title) => ({
     type: 'ADD_TODO',
-    id,
+    _id,
     title
 })
 
 export const addTodo = (title) => dispatch => {
-    const id = Date.now()
-    dispatch(addTodoDraw(id, title))
+    const _id = Date.now()
+    dispatch(addTodoDraw(_id, title))
     return request.post('todos', { title }).then(({ data }) => {
-        dispatch(addTodoSuccess(id, data))
+        dispatch(addTodoSuccess(_id, data))
     }).catch((err) => {
-        dispatch(addTodoFailed(id))
+        dispatch(addTodoFailed(_id))
     })
 }
 
-export const removeTodo = (id) => dispatch => request.delete(`todos/${id}`).then(({ data }) => {
-    dispatch({ type: 'REMOVE_TODO_SUCCESS', id })
+export const removeTodo = (_id) => dispatch => request.delete(`todos/${_id}`).then(({ data }) => {
+    dispatch({ type: 'REMOVE_TODO_SUCCESS', _id })
 }).catch((err) => {
     dispatch({ type: 'REMOVE_TODO_FAILED' })
 })
 
-export const resendTodo = (id, title) => dispatch => request.post('todos', { title }).then(({ data }) => {
-    dispatch({ type: 'RESEND_TODO_SUCCESS', id, todo: data })
+export const resendTodo = (_id, title) => dispatch => request.post('todos', { title }).then(({ data }) => {
+    dispatch({ type: 'RESEND_TODO_SUCCESS', _id, todo: data })
 }).catch((err) => {
     dispatch({ type: 'RESEND_TODO_FAILED' })
 })

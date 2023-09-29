@@ -19,7 +19,9 @@ const userSchema = new Schema({
 });
 
 userSchema.pre('save', function (next) {
-    this.password = User.hashPassword(this.password)
+    if (this.isModified('password')) {
+        this.password = User.hashPassword(this.password);
+    }
     next()
 });
 
